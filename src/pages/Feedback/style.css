@@ -1,0 +1,74 @@
+.feedback-screen {
+  align-items: center;
+  color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  height: 85%;
+  justify-content: center;
+}
+
+.feedback-screen .special-btn {
+  margin-top: 25px;
+}
+
+.feedback-screen h1 {
+  font-size: 2.5rem;
+}
+
+/* Código vindo de https://stackoverflow.com/questions/2570972/css-font-border */
+.feedback-screen .success {
+  margin-bottom: 50px;
+  text-shadow: 4px 4px 0 darkgreen, 
+    -4px 4px 0 darkgreen, 
+    4px -4px 0 darkgreen, 
+    -4px -4px 0 darkgreen, 
+    0 4px 0 darkgreen, 
+    0 -4px 0 darkgreen, 
+    -4px 0 0 darkgreen, 
+    4px 0 0 darkgreen, 
+    6px 6px 0 darkgreen, 
+    -6px 6px 0 darkgreen, 
+    6px -6px 0 darkgreen, 
+    -6px -6px 0 darkgreen, 
+    0 6px 0 darkgreen, 
+    0 -6px 0 darkgreen, 
+    -6px 0 0 darkgreen, 
+    6px 0 0 darkgreen, 
+    4px 6px 0 darkgreen, 
+    -4px 6px 0 darkgreen, 
+    4px -6px 0 darkgreen, 
+    -4px -6px 0 darkgreen, 
+    6px 4px 0 darkgreen, 
+    -6px 4px 0 darkgreen, 
+    6px -4px 0 darkgreen, 
+    -6px -4px 0 darkgreen;
+}
+
+/* Código vindo de https://stackoverflow.com/questions/2570972/css-font-border */
+.feedback-screen .failure {
+  margin-bottom: 50px;
+  text-shadow: 4px 4px 0 darkred, 
+    -4px 4px 0 darkred, 
+    4px -4px 0 darkred, 
+    -4px -4px 0 darkred, 
+    0 4px 0 darkred, 
+    0 -4px 0 darkred, 
+    -4px 0 0 darkred, 
+    4px 0 0 darkred, 
+    6px 6px 0 darkred, 
+    -6px 6px 0 darkred, 
+    6px -6px 0 darkred, 
+    -6px -6px 0 darkred, 
+    0 6px 0 darkred, 
+    0 -6px 0 darkred, 
+    -6px 0 0 darkred, 
+    6px 0 0 darkred, 
+    4px 6px 0 darkred, 
+    -4px 6px 0 darkred, 
+    4px -6px 0 darkred, 
+    -4px -6px 0 darkred, 
+    6px 4px 0 darkred, 
+    -6px 4px 0 darkred, 
+    6px -4px 0 darkred, 
+    -6px -4px 0 darkred;
+}

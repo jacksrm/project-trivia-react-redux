@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import GameHeader from '../../components/GameHeader';
 
+import './style.css';
+
 const BASE_SCORE = 3;
 
 class Feedback extends React.Component {
@@ -44,12 +46,19 @@ class Feedback extends React.Component {
 
   render() {
     const { questions, assertions, score } = this.props;
-    const feedbackText = assertions >= BASE_SCORE ? 'Mandou bem!' : 'Podia ser melhor...';
+    const feedbackText = assertions >= BASE_SCORE
+      ? 'Mandou bem! 🎊🎆🎉'
+      : 'Podia ser melhor... 😯😭';
     return (
       <>
         <GameHeader />
-        <main className="feedback">
-          <h1 data-testid="feedback-text">{feedbackText}</h1>
+        <main className="feedback-screen">
+          <h1
+            className={ assertions >= BASE_SCORE ? 'success' : 'failure' }
+            data-testid="feedback-text"
+          >
+            {feedbackText}
+          </h1>
           <h2>
             Você marcou
             {' '}
@@ -62,6 +71,7 @@ class Feedback extends React.Component {
             {` de ${questions.length}`}
           </h2>
           <button
+            className="special-btn"
             type="button"
             data-testid="btn-play-again"
             onClick={ this.handleClick }

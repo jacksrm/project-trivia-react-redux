@@ -12,6 +12,7 @@ import {
 } from '../../redux/actions';
 import './style.css';
 import Github from '../../components/Githubs';
+import Logo from '../../assets/images/Logo.png';
 
 class Login extends React.Component {
   constructor() {
@@ -116,6 +117,7 @@ class Login extends React.Component {
     const { history } = this.props;
     return (
       <main className="login-screen">
+        <img src={ Logo } alt="game logo!" />
         <form>
           <input
             placeholder="Nome"

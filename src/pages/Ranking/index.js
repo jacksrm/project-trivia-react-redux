@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PlayerRank from '../../components/PlayerRank';
 import './style.css';
-import Primeiro from '../../utils/imgs/Primeiro.png';
-import Segundo from '../../utils/imgs/Segundo.png';
-import Terceiro from '../../utils/imgs/Terceiro.png';
-import emBranco from '../../utils/imgs/emBranco.png';
-import Logo from '../../utils/imgs/Logo.png';
+import Primeiro from '../../assets/images/Primeiro.png';
+import Segundo from '../../assets/images/Segundo.png';
+import Terceiro from '../../assets/images/Terceiro.png';
+import emBranco from '../../assets/images/emBranco.png';
+import Logo from '../../assets/images/Logo.png';
 
 export default class Ranking extends Component {
   constructor() {
