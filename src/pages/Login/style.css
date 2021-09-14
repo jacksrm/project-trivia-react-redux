@@ -1,0 +1,105 @@
+.login-screen {
+  height: 100vh;
+  position: relative;
+}
+
+.login-screen form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.login-screen input, .login-screen input:-webkit-autofill {
+  background: none;
+  border: 3px solid rgb(4, 33, 89);
+  border-radius: 8px;
+  box-shadow: 0 0 8px 10px rgba(4, 32, 89, 0.486);
+  color: rgba(242, 228, 34, 1);
+  font-size: 2rem;
+  margin: 15px 0;
+  padding: 5px 15px;
+  text-align: center;
+}
+
+.login-screen input::placeholder {
+  color: rgba(242, 228, 34, 0.5);
+}
+
+.login-screen .play-btn {
+  background-color: rgb(242, 56, 39);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 0 8px 4px rgba(242, 56, 39, 0.329);
+  color: whitesmoke;
+  font-size: 2rem;
+  margin-top: 10px;
+  padding: 5px 15px;
+  transition: all 300ms;
+}
+
+.login-screen .play-btn:hover {
+  box-shadow: 0 0 8px 8px rgba(242, 56, 39, 0.329);
+}
+
+.login-screen .settings-btn {
+  background: none;
+  border: none;
+  color: rgba(242, 228, 34, 1);
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  transform: scale(3);
+  transition: all 300ms;
+}
+
+.login-screen .settings-btn:hover {
+  transform: scale(3.3);
+}
+
+.login-screen .settings-btn svg {
+  height: 100%;
+  transition: all 300ms;
+}
+
+@keyframes BtnRotate {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.login-screen .settings-btn svg:hover {
+  animation: BtnRotate 3s linear infinite;
+}
+
+/* ToDo animação engrenagem girando */
+.login-screen .github {
+  background-color: rgb(242, 56, 39);
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 0 8px 4px rgba(242, 56, 39, 0.329);
+  color: whitesmoke;
+  display: flex;
+  left: 45px;
+  padding: 5px 15px;
+  position: absolute;
+  text-decoration: none;
+  top: 30px;
+  transform: scale(1.2);
+  transition: all 300ms;
+}
+
+.login-screen .github:hover {
+  box-shadow: 0 0 8px 8px rgba(242, 56, 39, 0.329);
+  transform: scale(1.3);
+}
+
+.login-screen .github-name {
+  margin-left: 5px;
+}
