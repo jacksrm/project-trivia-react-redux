@@ -3,12 +3,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   nextQuestions,
-  startCronometer,
   btnNext,
   revealAnswers,
   hiddenButton,
-  resetTime,
 } from '../../redux/actions';
+import {
+  resetTimer,
+  startChronometer,
+  stopChronometer,
+  updateTime,
+} from '../../redux/actions/timerActions';
 import Button from '../Button';
 
 import './style.css';
@@ -20,6 +24,18 @@ class Answers extends Component {
     this.nextBtn = this.nextBtn.bind(this);
   }
 
+  componentDidMount() {
+    const { start, update } = this.props;
+    start(() => update());
+  }
+
+  componentDidUpdate(prevProps) {
+    const { chronometer, start, update, currentQuestion } = this.props;
+    if (!chronometer && prevProps.currentQuestion !== currentQuestion) {
+      start(() => update());
+    }
+  }
+
   nextBtn() {
     const { btnNextReducer } = this.props;
     btnNextReducer();
@@ -29,14 +45,13 @@ class Answers extends Component {
     const {
       answers,
       nextQuestion,
-      startCronometerTime,
       currentQuestion,
       time,
       btnNextValue,
       setRevealAnswers,
       goToFeedback,
       hiddenButtonReducer,
-      resetTimeReducer,
+      reset,
     } = this.props;
     const QUATRO = 4;
     return (
@@ -58,8 +73,7 @@ class Answers extends Component {
             id="btn-next"
             onClick={ () => {
               nextQuestion();
-              resetTimeReducer();
-              startCronometerTime();
+              reset();
               hiddenButtonReducer();
               setRevealAnswers(false);
               if (currentQuestion === QUATRO) goToFeedback();
@@ -81,29 +95,37 @@ Answers.propTypes = {
   answers: PropTypes.arrayOf(PropTypes.object).isRequired,
   btnNextReducer: PropTypes.func.isRequired,
   btnNextValue: PropTypes.bool.isRequired,
+  chronometer: PropTypes.number.isRequired,
   currentQuestion: PropTypes.number.isRequired,
   goToFeedback: PropTypes.func.isRequired,
   hiddenButtonReducer: PropTypes.func.isRequired,
   nextQuestion: PropTypes.func.isRequired,
-  resetTimeReducer: PropTypes.func.isRequired,
+  reset: PropTypes.func.isRequired,
   setRevealAnswers: PropTypes.func.isRequired,
-  startCronometerTime: PropTypes.func.isRequired,
+  start: PropTypes.func.isRequired,
   time: PropTypes.number.isRequired,
+  update: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  currentQuestion: state.questions.currentQuestion,
-  time: state.timer.time,
-  btnNextValue: state.questions.btnNext,
+const mapStateToProps = ({
+  timer: { chronometer, time },
+  questions: { currentQuestion, btnNext: btnNextValue },
+}) => ({
+  time,
+  currentQuestion,
+  btnNextValue,
+  chronometer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  start: (execute) => dispatch(startChronometer(execute)),
+  update: () => dispatch(updateTime()),
+  reset: () => dispatch(resetTimer()),
+  stop: () => dispatch(stopChronometer()),
   nextQuestion: () => dispatch(nextQuestions()),
-  startCronometerTime: () => dispatch(startCronometer()),
   btnNextReducer: () => dispatch(btnNext()),
   setRevealAnswers: (reveal) => dispatch(revealAnswers(reveal)),
   hiddenButtonReducer: () => dispatch(hiddenButton()),
-  resetTimeReducer: () => dispatch(resetTime()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answers);

@@ -1,47 +1,60 @@
 import {
   SET_CHRONOMETER,
-  RESET_TIME,
-  UPDATE_SECOND,
-  START_CRONOMETER,
-  STOP_CRONOMETER,
-} from '../actions/actionTypes';
+  RESET_TIMER,
+  STOP_CHRONOMETER,
+  UPDATE_TIME,
+  START_CHRONOMETER,
+
+} from '../actions/timerActions';
 
 const INITIAL_STATE = {
   chronometer: null,
   time: 30,
-  timer: true,
 };
 
-const timer = (state = INITIAL_STATE, action) => {
+const stopInterval = (interval) => {
+  clearInterval(interval);
+  return null;
+};
+
+const start = (execute) => {
+  const INTERVAL = 1000;
+  const chronometer = setInterval(() => {
+    execute();
+  }, INTERVAL);
+
+  return chronometer;
+};
+
+const newTimer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SET_CHRONOMETER:
     return {
       ...state,
       chronometer: action.chronometer,
     };
-  case UPDATE_SECOND:
+  case START_CHRONOMETER:
+    return {
+      ...state,
+      chronometer: start(action.execute),
+    };
+  case UPDATE_TIME:
     return {
       ...state,
       time: state.time - 1,
     };
-  case RESET_TIME:
+  case RESET_TIMER:
     return {
-      ...state,
-      time: 30,
+      ...INITIAL_STATE,
     };
-  case START_CRONOMETER:
+  case STOP_CHRONOMETER:
     return {
       ...state,
-      timer: true,
-    };
-  case STOP_CRONOMETER:
-    return {
-      ...state,
-      timer: false,
+      chronometer: stopInterval(state.chronometer),
     };
   default:
     return state;
   }
 };
 
-export default timer;
+export default newTimer;

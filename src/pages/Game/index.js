@@ -55,14 +55,16 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  player: PropTypes.objectOf().isRequired,
+  player: PropTypes.shape(PropTypes.object).isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  player: state.player,
-  questions: state.questions.data,
-  currentQuestion: state.questions.currentQuestion,
+const mapStateToProps = (
+  { player, questions: { data, currentQuestion } },
+) => ({
+  player,
+  questions: data,
+  currentQuestion,
 });
 
 export default connect(mapStateToProps, null)(Game);

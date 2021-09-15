@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import {
   revealAnswers,
   setAssertions,
-  setChronometer,
   setScore,
 } from '../../redux/actions';
+import { stopChronometer } from '../../redux/actions/timerActions';
 import fixEncodedWords from '../../utils/fixEncodedWords';
 
 const BASE_SCORE = 10;
@@ -58,13 +58,11 @@ class Button extends React.Component {
       answer,
       nextBtn,
       setRevealAnswers,
-      chronometer,
-      setChronometerInstance,
+      stop,
     } = this.props;
     this.calcScore(answer.correct);
     nextBtn();
-    clearInterval(chronometer);
-    setChronometerInstance(null);
+    stop();
     setRevealAnswers(true);
   }
 
@@ -93,16 +91,15 @@ Button.propTypes = {
     value: PropTypes.string,
   }).isRequired,
   assertion: PropTypes.func.isRequired,
-  chronometer: PropTypes.number.isRequired,
   currentQuestion: PropTypes.number.isRequired,
   key: PropTypes.number,
   nextBtn: PropTypes.func.isRequired,
-  player: PropTypes.objectOf(PropTypes).isRequired,
+  player: PropTypes.objectOf().isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   reveal: PropTypes.bool.isRequired,
   score: PropTypes.func.isRequired,
-  setChronometerInstance: PropTypes.func.isRequired,
   setRevealAnswers: PropTypes.func.isRequired,
+  stop: PropTypes.func.isRequired,
   time: PropTypes.number.isRequired,
 };
 
@@ -112,17 +109,20 @@ Button.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => ({
   setRevealAnswers: (reveal) => dispatch(revealAnswers(reveal)),
-  setChronometerInstance: (chronometer) => dispatch(setChronometer(chronometer)),
   assertion: () => dispatch(setAssertions()),
   score: (score) => dispatch(setScore(score)),
+  stop: () => dispatch(stopChronometer()),
 });
 
-const mapStateToProps = (state) => ({
-  player: state.player,
-  time: state.timer.time,
-  questions: state.questions.data,
-  currentQuestion: state.questions.currentQuestion,
-  reveal: state.questions.reveal,
-  chronometer: state.timer.chronometer,
+const mapStateToProps = ({
+  player,
+  questions: { data: questions, currentQuestion, reveal },
+  timer: { time },
+}) => ({
+  player,
+  time,
+  questions,
+  currentQuestion,
+  reveal,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Button);

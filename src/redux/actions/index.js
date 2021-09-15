@@ -3,10 +3,7 @@ import {
   FETCH_QUESTIONS,
   FETCH_SUCCESS,
   SAVE_DATA,
-  UPDATE_SECOND,
   NEXT_QUESTION,
-  START_CRONOMETER,
-  STOP_CRONOMETER,
   BTN_NEXT,
   REVEAL_ANSWERS,
   SET_CHRONOMETER,
@@ -15,7 +12,6 @@ import {
   RESET_STATE_LOGIN,
   RESET_STATE_QUESTIONS,
   RESET_STATE_PLAYER,
-  RESET_TIME,
   HIDDEN_NEXT_BUTTON,
 } from './actionTypes';
 
@@ -57,21 +53,9 @@ export const fetchSuccess = (token) => ({
   token,
 });
 
-export const updateSeconds = () => ({
-  type: UPDATE_SECOND,
-});
-
 export const nextQuestions = (currentQuestion) => ({
   type: NEXT_QUESTION,
   currentQuestion,
-});
-
-export const startCronometer = () => ({
-  type: START_CRONOMETER,
-});
-
-export const stopCronometer = () => ({
-  type: STOP_CRONOMETER,
 });
 
 export const btnNext = () => ({
@@ -92,10 +76,6 @@ export const resetStatePlayer = () => ({
 
 export const resetStateQuestions = () => ({
   type: RESET_STATE_QUESTIONS,
-});
-
-export const resetTime = () => ({
-  type: RESET_TIME,
 });
 
 export const fetchQuestionsThunk = ({ amount = BASE_AMOUNT, token }) => (
@@ -129,8 +109,6 @@ export const fetchStartThunk = () => async (dispatch) => {
 
   const json = localStorage.getItem('ranking');
   const currentStorage = JSON.parse(json);
-
-  console.log(currentStorage);
 
   if (currentStorage === null) {
     localStorage.setItem('ranking', JSON.stringify([]));

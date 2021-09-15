@@ -98,14 +98,14 @@ class Login extends React.Component {
     return true;
   }
 
-  async startGame() {
+  startGame() {
     const { gameStart, saveData } = this.props;
     const localStorageToken = localStorage.getItem('token');
     const imgPerson = localStorageToken !== 'null'
       ? `https://www.gravatar.com/avatar/${localStorageToken}`
       : 'https://media0.giphy.com/media/3oEjI6SIIHBdRxXI40/200.gif';
 
-    await this.setState({
+    this.setState({
       img: imgPerson,
     });
     saveData(this.state);

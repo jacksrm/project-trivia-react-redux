@@ -1,65 +1,53 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateSeconds, stopCronometer, setChronometer } from '../../redux/actions/index';
-
+import {
+  resetTimer,
+  setChronometer,
+  startChronometer,
+  stopChronometer,
+  updateTime,
+} from '../../redux/actions/timerActions';
 import './style.css';
 
-class Timer extends Component {
-  startChronometer() {
-    const INTERVAL = 1000;
-    const { setChronometerInstance } = this.props;
-
-    setChronometerInstance(
-      setInterval(() => {
-        const { updateSecond, time } = this.props;
-        if (time > 0) {
-          updateSecond();
-        } else {
-          clearInterval(this.chronometer);
-        }
-      }, INTERVAL),
-    );
+class NewTimer extends Component {
+  componentDidUpdate() {
+    const { stop, time } = this.props;
+    console.log('atualizou!');
+    if (time === 0) {
+      stop();
+    }
   }
 
-  cronometer() {
-    const { stopCronometerTime, chronometer, setChronometerInstance } = this.props;
-    clearInterval(chronometer);
-    setChronometerInstance(null);
-    stopCronometerTime();
-    this.startChronometer();
+  componentWillUnmount() {
+    const { reset, stop } = this.props;
+    stop();
+    reset();
   }
 
   render() {
-    const { time, timer } = this.props;
-    if (timer) {
-      this.cronometer();
-    }
-    return (
-      <div className="timer">{`${time}s`}</div>
-    );
+    const { time } = this.props;
+    return <div className="timer">{`${time}s`}</div>;
   }
 }
 
-Timer.propTypes = {
-  chronometer: PropTypes.number.isRequired,
-  setChronometerInstance: PropTypes.func.isRequired,
-  stopCronometerTime: PropTypes.func.isRequired,
+NewTimer.propTypes = {
+  reset: PropTypes.func.isRequired,
+  stop: PropTypes.func.isRequired,
   time: PropTypes.number.isRequired,
-  timer: PropTypes.bool.isRequired,
-  updateSecond: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  time: state.timer.time,
-  timer: state.timer.timer,
-  chronometer: state.timer.chronometer,
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  updateSecond: () => dispatch(updateSeconds()),
-  stopCronometerTime: () => dispatch(stopCronometer()),
   setChronometerInstance: (chronometer) => dispatch(setChronometer(chronometer)),
+  update: (time) => dispatch(updateTime(time)),
+  reset: () => dispatch(resetTimer()),
+  stop: () => dispatch(stopChronometer()),
+  start: (execute) => dispatch(startChronometer(execute)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timer);
+const mapStateToProps = ({ timer: { chronometer, time } }) => ({
+  chronometer,
+  time,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewTimer);
